@@ -14,6 +14,17 @@
         width: auto;
         object-fit: contain;
     }
+    /* --- Navbar Link Hover & Active State --- */
+    .navbar-nav .nav-link {
+        transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        color: #e00073 !important; /* Magenta */
+        /* Adds a subtle thickness to the text without shifting the layout */
+        text-shadow: 0.6px 0 0 #e00073; 
+    }
     .hero-section {
         /* The linear-gradient adds a 30% dark overlay so the white text stays readable */
         background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('images/angeline-wagner-F3XB46mgpm0-unsplash(1).jpg');
@@ -320,6 +331,11 @@
         color: #e00073; /* Magenta accent for icons */
         font-size: 1.1rem;
         margin-right: 0.5rem;
+    }
+    /* --- Form Validation Styles --- */
+    .input-error {
+        border: 2px solid #dc3545 !important; /* Bootstrap Danger Red */
+        background-color: #fff8f8 !important; /* Very light red tint */
     }
     </style>
 </head>
@@ -729,7 +745,7 @@
           
           <div class="bg-white p-4 p-md-5 rounded shadow-sm" style="border-top: 5px solid #e00073;">
             
-            <form action="https://formspree.io/f/xwvrpaze" method="POST">
+            <form action="https://formspree.io/f/xwvrpaze" method="POST" novalidate>
               <div class="row g-4">
                 
                 <div class="col-md-6">
@@ -769,7 +785,11 @@
                   <textarea class="form-control bg-light border-0 py-2" id="message" name="message" rows="5" placeholder="Tell us about your project or challenge..." required></textarea>
                 </div>
                 
-                <div class="col-12 text-center mt-4">
+                <div class="col-12 mt-2">
+                  <div id="form-messages" class="text-center fw-bold d-none p-2 rounded"></div>
+                </div>
+
+                <div class="col-12 text-center mt-3">
                   <button type="submit" class="btn contact-btn px-5 py-3 w-100 fw-bold text-uppercase" style="letter-spacing: 1px;">Send Message</button>
                 </div>
                 
@@ -858,6 +878,16 @@
           const targetElement = document.querySelector(targetId);
 
           if (targetElement) {
+            
+            // --- NEW CODE: Handle the active class for magenta highlighting ---
+            if (this.classList.contains('nav-link')) {
+              // Remove active class from all links
+              document.querySelectorAll('.navbar-nav .nav-link').forEach(nav => nav.classList.remove('active'));
+              // Add active class to the currently clicked link
+              this.classList.add('active');
+            }
+            // ----------------------------------------------------------------
+
             // Find which main page this element lives inside (or if it IS the main page)
             const parentPage = targetElement.closest('.page-section');
 
@@ -875,12 +905,9 @@
             }
 
             // Smart Scrolling: 
-            // If they clicked a main menu link, scroll to top. 
-            // If they clicked Contact Us, scroll down to the form.
             if (targetElement.classList.contains('page-section')) {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-              // Uses a tiny timeout to ensure the page has finished unhiding before scrolling
               setTimeout(() => {
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }, 50);
@@ -889,6 +916,116 @@
         }
       });
     });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector('form[action="https://formspree.io/f/xwvrpaze"]');
+    const messageContainer = document.getElementById('form-messages');
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // Stops the page from refreshing
+
+        // Select the required fields
+        const requiredFields = [
+          document.getElementById('fullName'),
+          document.getElementById('emailAddress'),
+          document.getElementById('message')
+        ];
+
+        let isValid = true;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple check for valid email format
+
+        // Reset previous messages
+        messageContainer.classList.add('d-none');
+        messageContainer.classList.remove('text-danger', 'text-success', 'bg-light', 'bg-danger-subtle');
+        messageContainer.textContent = '';
+
+        // Check each required field
+        requiredFields.forEach(field => {
+          let fieldIsValid = true;
+
+          // Check if the field is empty
+          if (field.value.trim() === '') {
+            fieldIsValid = false;
+          } 
+          // If it's the email field, check if it's actually an email address
+          else if (field.id === 'emailAddress' && !emailRegex.test(field.value.trim())) {
+            fieldIsValid = false;
+          }
+
+          // Apply or remove the red border
+          if (!fieldIsValid) {
+            isValid = false;
+            field.classList.add('input-error');
+            field.classList.remove('border-0');
+          } else {
+            field.classList.remove('input-error');
+            field.classList.add('border-0');
+          }
+        });
+
+        // If validation fails, show your custom error in the message bar and stop
+        if (!isValid) {
+          messageContainer.textContent = 'Please compile the requested fields with correct values.';
+          messageContainer.classList.remove('d-none');
+          messageContainer.classList.add('text-danger', 'bg-danger-subtle'); // Red text on a very light red background
+          return;
+        }
+
+        // If valid, show loading state on button
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        // Send data to Formspree in the background
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            // SUCCESS: Empty the form and show success message
+            form.reset(); 
+            messageContainer.textContent = 'Message sent successfully! We will be in touch soon.';
+            messageContainer.classList.remove('d-none');
+            messageContainer.classList.add('text-success', 'bg-light');
+          } else {
+            // ERROR from server
+            messageContainer.textContent = 'Oops! There was a problem submitting your form.';
+            messageContainer.classList.remove('d-none');
+            messageContainer.classList.add('text-danger', 'bg-light');
+          }
+        }).catch(error => {
+          // NETWORK ERROR
+          messageContainer.textContent = 'Oops! Please check your internet connection and try again.';
+          messageContainer.classList.remove('d-none');
+          messageContainer.classList.add('text-danger', 'bg-light');
+        }).finally(() => {
+          // Restore the button
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        });
+      });
+
+      // Remove the red border as soon as the user starts typing to fix their mistake
+      const allRequiredInputs = form.querySelectorAll('[required]');
+      allRequiredInputs.forEach(input => {
+        input.addEventListener('input', function () {
+          this.classList.remove('input-error');
+          this.classList.add('border-0');
+          
+          // Optionally hide the error message bar once they start typing again
+          messageContainer.classList.add('d-none');
+        });
+      });
+    }
   });
 </script>
 </body>
