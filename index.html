@@ -1,1032 +1,755 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="scroll-smooth" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gp Advisory</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="icon" type="image/svg" href="images\gp-advisory-logo-notext.svg">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>VTF Cosmetics</title>
     
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error": "#ffffff","on-error-container": "#93000a","surface-dim": "#dcd9d9",
+                        "inverse-primary": "#abc7ff","on-primary-fixed-variant": "#00458e","error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#364767","surface-container-lowest": "#ffffff",
+                        "outline": "#727785","tertiary": "#675382","secondary-fixed": "#d7e2ff",
+                        "on-primary-fixed": "#001b3f","surface-container-low": "#f6f3f2",
+                        "outline-variant": "#c1c6d5","on-secondary-container": "#4d5d7f",
+                        "primary-fixed-dim": "#abc7ff","on-surface": "#1b1c1c","primary-container": "#1672df",
+                        "tertiary-container": "#806b9c","on-primary": "#ffffff","on-tertiary-fixed-variant": "#513e6b",
+                        "error-container": "#ffdad6","secondary-fixed-dim": "#b6c7ed","primary": "#005ab6",
+                        "background": "#fbf9f8","inverse-on-surface": "#f3f0f0","surface-variant": "#e4e2e1",
+                        "surface-container-highest": "#e4e2e1","on-tertiary": "#ffffff","surface-bright": "#fbf9f8",
+                        "tertiary-fixed": "#eddcff","secondary": "#4e5e80","surface": "#fbf9f8",
+                        "primary-fixed": "#d7e3ff","secondary-container": "#c6d7ff","inverse-surface": "#303030",
+                        "surface-container": "#f0eded","on-secondary-fixed": "#071b39","tertiary-fixed-dim": "#d5bcf2",
+                        "surface-container-high": "#eae8e7","on-primary-container": "#fefcff","on-secondary": "#ffffff",
+                        "on-tertiary-container": "#fffbff","surface-tint": "#005cba","on-surface-variant": "#414753",
+                        "on-tertiary-fixed": "#24113d","on-background": "#1b1c1c"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
     <style>
-    .navbar-brand img {
-        height: 55px; 
-        width: auto;
-        object-fit: contain;
-    }
-    /* --- Navbar Link Hover & Active State --- */
-    .navbar-nav .nav-link {
-        transition: color 0.2s ease, text-shadow 0.2s ease;
-    }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .clinical-wash { background: linear-gradient(135deg, #005ab6 0%, #1672df 100%); }
+        .glass-nav { backdrop-filter: blur(24px); }
 
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active {
-        color: #e00073 !important; /* Magenta */
-        /* Adds a subtle thickness to the text without shifting the layout */
-        text-shadow: 0.6px 0 0 #e00073; 
-    }
-    .hero-section {
-        /* The linear-gradient adds a 30% dark overlay so the white text stays readable */
-        background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('images/angeline-wagner-F3XB46mgpm0-unsplash(1).jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        /* Sets the hero height to at least 70% of the viewport height */
-        min-height: 65vh;
-        display: flex;
-        align-items: center;
-    }
-    .custom-box {
-        background-color: rgba(17, 113, 150, 0.8); 
-        clip-path: polygon(40px 0, 100% 0, calc(100% - 40px) 100%, 0 100%);
-        
-        /* Base padding for mobile devices */
-        padding: 1rem 2rem; 
-    }
-    /* Add extra wide horizontal padding for tablets and desktops */
-    @media (min-width: 768px) {
-        .custom-box {
-            padding: 1.5rem 5rem; /* 3rem top/bottom, 6rem left/right */
+        /* Mobile menu transition */
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
         }
-    }
-    /* Specialization Blocks CSS */
-    .specialization-block {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-left: 5px solid #117196; /* Matches the hero custom-box color */
-    }
-    .specialization-block:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
-    }
-    
-    /* Optional decorative shape for the image */
-    .decorative-shape {
-        position: absolute;
-        bottom: -20px;
-        left: -20px;
-        width: 100px;
-        height: 100px;
-        background-color: #117196;
-        clip-path: polygon(0 0, 100% 100%, 0 100%);
-        z-index: -1;
-    }
-        /* Footer link hover effect */
-    .hover-primary {
-        transition: color 0.2s ease-in-out;
-    }
-    .hover-primary:hover {
-        color: #117196 !important; /* Matches your custom-box blue */
-    }
-    /* Animated Hamburger CSS */
-    .custom-toggler:focus {
-        outline: none;
-    }
-    .animated-icon {
-        width: 26px; height: 16px; position: relative; margin: 0; 
-        transform: rotate(0deg); transition: .5s ease-in-out; cursor: pointer;
-    }
-    .animated-icon span {
-        display: block; position: absolute; height: 2px; width: 100%; 
-        background: #117196; border-radius: 2px; opacity: 1; left: 0; 
-        transform: rotate(0deg); transition: .25s ease-in-out;
-    }
-    /* Positioning the 3 lines */
-    .animated-icon span:nth-child(1) { top: 0px; }
-    .animated-icon span:nth-child(2) { top: 7px; }
-    .animated-icon span:nth-child(3) { top: 14px; }
-
-    /* The animation when the menu is open (Bootstrap toggles aria-expanded automatically) */
-    button[aria-expanded="true"] .animated-icon span:nth-child(1) {
-        top: 7px; transform: rotate(135deg);
-    }
-    button[aria-expanded="true"] .animated-icon span:nth-child(2) {
-        opacity: 0; left: -20px;
-    }
-    button[aria-expanded="true"] .animated-icon span:nth-child(3) {
-        top: 7px; transform: rotate(-135deg);
-    }
-    /* --- Contact Us Button Base (Magenta Rectangle) --- */
-    .contact-btn {
-        background-color: #e00073; /* Magenta */
-        color: #ffffff !important;
-        border-radius: 0; /* Forces a rectangle */
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-    }
-
-    .contact-btn:hover {
-        background-color: #b3005c; /* Darker magenta on hover */
-    }
-
-    /* --- Desktop Styles (min-width: 992px) --- */
-    @media (min-width: 992px) {
-        .contact-btn {
-            padding: 0.5rem 1.5rem;
-            display: inline-block;
+        #mobile-menu.open {
+            max-height: 400px;
         }
-    }
-
-    /* --- Mobile (Collapsed) Styles (max-width: 991.98px) --- */
-    @media (max-width: 991.98px) {
-        /* Make the collapsed menu sit in front of all content */
-        .navbar {
-            position: relative; /* Ensures the absolute collapse positions relative to the nav */
-        }
-        
-        .navbar-collapse {
-            position: absolute;
-            top: 100%; /* Pushes the menu exactly below the navbar header */
-            left: 0;
-            width: 100%;
-            background-color: #f8f9fa; /* Matches the bg-light of your navbar */
-            z-index: 1050; /* Keeps it above other page elements */
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1); /* Adds depth */
-        }
-        
-        /* Style the list items as stacked blocks */
-        .navbar-nav .nav-item {
-            width: 100%;
-            border-bottom: 1px solid #e9ecef; /* Separator lines between blocks */
-        }
-        
-        .navbar-nav .nav-link {
-            padding: 1rem 1.5rem !important;
-            text-align: left !important; /* Left alignment looks better for block menus */
-        }
-
-        /* Make the Contact container and button full-width blocks */
-        .mobile-contact-container {
-            width: 100%;
-            display: block !important;
-        }
-
-        .contact-btn {
-            display: block;
-            width: 100%;
-            padding: 1rem 1.5rem;
-            text-align: center;
-        }
-      }
-      /* --- Dark Background Overlay for Mobile Menu --- */
-    @media (max-width: 991.98px) {
-        /* 1. Ensure the navbar header stays on top of the dark overlay */
-        .navbar {
-            position: relative;
-            z-index: 1050; 
-        }
-
-        /* 2. Create the dark overlay when the button is clicked */
-        body:has(.navbar-toggler[aria-expanded="true"])::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.65); /* 65% opacity black */
-            z-index: 1040; /* Places it just below the navbar (1050) */
-            backdrop-filter: blur(3px); /* Optional: adds a slight blur to the background content */
-        }
-    }
-    /* --- Testimonial Postcard Slider --- */
-    .postcard-wrapper {
-        background-color: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.06);
-        position: relative;
-        border-top: 5px solid #e00073; /* Magenta accent */
-        padding: 3rem 2rem;
-        margin: 1rem auto;
-        max-width: 800px;
-
-        /* --- THE FIX: Use a fixed height to completely lock the size --- */
-        height: 400px; 
-        
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* --- Taller fixed height for mobile to accommodate text wrapping --- */
-    @media (max-width: 767.98px) {
-        .postcard-wrapper {
-            height: 480px; 
-            padding: 2rem 1.5rem; /* Slightly tighter padding for mobile screens */
-        }
-    }
-    
-    .quote-icon {
-        font-size: 3rem;
-        color: rgba(17, 113, 150, 0.2); /* Light transparent brand blue */
-        position: absolute;
-        top: 15px;
-        left: 25px;
-        line-height: 1;
-    }
-
-    /* Customize Bootstrap Carousel Indicators */
-    #testimonialCarousel .carousel-indicators {
-        bottom: -50px;
-    }
-    #testimonialCarousel .carousel-indicators [data-bs-target] {
-        background-color: #cbd5e1;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        margin: 0 6px;
-    }
-    #testimonialCarousel .carousel-indicators .active {
-        background-color: #117196; /* Brand Blue */
-    }
-
-    /* Adjust Carousel Controls to sit nicely outside the card on desktop */
-    #testimonialCarousel .carousel-control-prev,
-    #testimonialCarousel .carousel-control-next {
-        width: 10%;
-        opacity: 0.7;
-    }
-    #testimonialCarousel .carousel-control-prev:hover,
-    #testimonialCarousel .carousel-control-next:hover {
-        opacity: 1;
-    }
-    /* --- Services Grid CSS --- */
-    .service-card {
-        background: #ffffff;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        border: 1px solid #f0f0f0;
-        border-top: 4px solid #117196; /* Brand blue border */
-        height: 100%;
-    }
-    
-    .service-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.08) !important;
-        border-top-color: #e00073; /* Changes to magenta on hover */
-    }
-
-    .service-icon-box {
-        width: 65px;
-        height: 65px;
-        background-color: rgba(17, 113, 150, 0.1); /* Light transparent blue */
-        color: #117196;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    /* Invert icon colors on hover */
-    .service-card:hover .service-icon-box {
-        background-color: #e00073;
-        color: #ffffff;
-    }
-    /* You can delete this part! */
-    .how-we-work-title {
-        border: 2px solid #117196; 
-        border-radius: 8px;
-        background-color: #ffffff;
-    }
-
-    .step-box-left {
-        background-color: #117196; /* Brand blue */
-        color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        min-height: 100px;
-        transition: transform 0.3s ease;
-    }
-    
-    .step-box-right {
-        background-color: #ffffff;
-        border: 1px solid #e9ecef;
-        border-left: 5px solid #e00073; /* Magenta accent */
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        min-height: 100px;
-        transition: transform 0.3s ease;
-    }
-
-    /* Small hover effect to make the steps feel interactive */
-    .step-row:hover .step-box-left,
-    .step-row:hover .step-box-right {
-        transform: translateY(-4px);
-    }
-    /* --- Office Location Blocks CSS --- */
-    .office-block {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-left: 5px solid #117196; /* Brand blue border */
-    }
-    .office-block:hover {
-        transform: translateX(5px); /* Slides slightly to the right on hover */
-        box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
-    }
-    
-    .office-icon {
-        color: #e00073; /* Magenta accent for icons */
-        font-size: 1.1rem;
-        margin-right: 0.5rem;
-    }
-    /* --- Form Validation Styles --- */
-    .input-error {
-        border: 2px solid #dc3545 !important; /* Bootstrap Danger Red */
-        background-color: #fff8f8 !important; /* Very light red tint */
-    }
     </style>
 </head>
-<body>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-  <div class="container">
-    
-    <a class="navbar-brand" href="index.html">
-      <img src="images\gp-advisory-logo-horizontal.svg" alt="GP Advisory">
-    </a>
+    <!-- ============ NAV ============ -->
+    <nav id="main-nav" class="fixed top-0 w-full z-50 bg-white shadow-sm shadow-slate-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex justify-between items-center">
 
-    <button class="navbar-toggler border-0 shadow-none custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-  <div class="animated-icon">
-    <span></span><span></span><span></span>
-  </div>
-</button>
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center shrink-0">
+                <img alt="VTF Cosmetics Logo" class="h-12 sm:h-14 w-auto" src="images/Logo_VTF_Tunisia.png" />
+            </a>
 
-    <div class="collapse navbar-collapse" id="navbarContent">
-      
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-        <li class="nav-item mx-lg-4">
-          <a class="nav-link" href="#who-we-are">Who We Are</a>
-        </li>
-        <li class="nav-item mx-lg-4">
-          <a class="nav-link" href="#what-we-do">What We Do</a>
-        </li>
-        <li class="nav-item mx-lg-4">
-          <a class="nav-link" href="#where-to-find-us">Where To Find Us</a>
-        </li>
-      </ul>
+            <!-- Desktop nav links -->
+            <div class="hidden lg:flex items-center gap-0.5 font-label text-sm font-semibold">
+                <a href="#hero"                       class="nav-link px-4 py-2 rounded-xl text-slate-600 hover:text-primary hover:bg-blue-50 transition-all duration-200 tracking-tight">Our Mission</a>
+                <a href="#our-production"             class="nav-link px-4 py-2 rounded-xl text-slate-600 hover:text-primary hover:bg-blue-50 transition-all duration-200 tracking-tight">Our Production</a>
+                <a href="#our-precision"              class="nav-link px-4 py-2 rounded-xl text-slate-600 hover:text-primary hover:bg-blue-50 transition-all duration-200 tracking-tight">Our Precision</a>
+                <a href="#our-mission"                class="nav-link px-4 py-2 rounded-xl text-slate-600 hover:text-primary hover:bg-blue-50 transition-all duration-200 tracking-tight">Reliability &amp; Certifications</a>
+                <a href="#reliability-certifications" class="nav-link px-4 py-2 rounded-xl text-slate-600 hover:text-primary hover:bg-blue-50 transition-all duration-200 tracking-tight">Our Products</a>
+            </div>
 
-    <div class="d-flex mobile-contact-container">
-      <a href="#contact-section" class="btn contact-btn border-0">Contact Us</a>
-    </div>
-
-    </div>
-  </div>
-</nav>
-
-<div id="who-we-are" class="page-section">
-  <header id="mission" class="hero-section text-white">
-    <div class="container">
-      <div class="row align-items-center custom-box">
-        
-        <div class="col-md-5 mb-4 mb-md-0">
-          <h1 class="display-3 fw-bold">Our Mission</h1>
-          <div class="bg-white rounded mt-3" style="width: 210px; height: 5px;"></div>
+            <!-- Contact Us CTA + Hamburger -->
+            <div class="flex items-center gap-3">
+                <a href="#contact" class="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl font-label text-sm font-bold tracking-wide text-white transition-all duration-200 shadow-md clinical-wash hover:brightness-110">
+                    <span class="material-symbols-outlined" style="font-size:1rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">mail</span>
+                    Contact Us
+                </a>
+                <!-- Hamburger -->
+                <button id="hamburger-btn" class="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px] rounded-xl hover:bg-slate-100 transition-colors focus:outline-none" aria-label="Open menu">
+                    <span class="block w-5 h-0.5 bg-slate-700 transition-all duration-300" id="bar1"></span>
+                    <span class="block w-5 h-0.5 bg-slate-700 transition-all duration-300" id="bar2"></span>
+                    <span class="block w-5 h-0.5 bg-slate-700 transition-all duration-300" id="bar3"></span>
+                </button>
+            </div>
         </div>
 
-        <div class="col-md-7">
-          <p class="lead fs-3 mb-0">
-            We provide strategic, data-driven advisory services that empower businesses to navigate complex challenges, optimize their operations, and achieve sustainable growth.
-          </p>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="lg:hidden overflow-hidden border-t border-slate-100" style="max-height:0; transition: max-height 0.35s ease-in-out;">
+            <div class="flex flex-col p-4 gap-1 font-label text-sm font-semibold bg-white">
+                <a href="#hero"                       class="mobile-nav-link text-slate-700 px-4 py-3 rounded-xl hover:bg-slate-50 hover:text-primary transition-colors">Our Mission</a>
+                <a href="#our-production"             class="mobile-nav-link text-slate-700 px-4 py-3 rounded-xl hover:bg-slate-50 hover:text-primary transition-colors">Our Production</a>
+                <a href="#our-precision"              class="mobile-nav-link text-slate-700 px-4 py-3 rounded-xl hover:bg-slate-50 hover:text-primary transition-colors">Our Precision</a>
+                <a href="#our-mission"                class="mobile-nav-link text-slate-700 px-4 py-3 rounded-xl hover:bg-slate-50 hover:text-primary transition-colors">Reliability &amp; Certifications</a>
+                <a href="#reliability-certifications" class="mobile-nav-link text-slate-700 px-4 py-3 rounded-xl hover:bg-slate-50 hover:text-primary transition-colors">Our Products</a>
+                <div class="h-px bg-slate-100 my-1"></div>
+                <a href="#contact" class="mobile-nav-link flex items-center justify-center gap-2 text-white px-4 py-3 rounded-xl font-bold clinical-wash">
+                    <span class="material-symbols-outlined" style="font-size:1rem;">mail</span>
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Remove old scroll style block -->
+    <style>
+        /* Nav is always white — no scroll variant needed */
+    </style>
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="relative min-h-screen pt-16 sm:pt-20 overflow-hidden">
+        <!-- Full bleed background image -->
+        <div class="absolute inset-0 z-0">
+            <img alt="VTF Cosmetics Production Hub" class="w-full h-full object-cover" src="images/Production_VTF.jpg" />
+            <!-- gradient overlay: dark on left for text legibility, fading to transparent on right -->
+            <div class="absolute inset-0" style="background: linear-gradient(100deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.10) 100%);"></div>
         </div>
 
-      </div>
-    </div>
-  </header>
+        <!-- Content: always centered-left on top of the gradient -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 w-full min-h-screen flex items-center">
+            <div class="max-w-xl flex flex-col">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-headline font-extrabold tracking-tighter leading-[1.15] mb-6 text-white drop-shadow-lg">
+                    Excellence in<br/>
+                    Hair bleaching powders<br/>
+                    at the heart of<br/>
+                    North Africa.
+                </h1>
 
-  <section id="specializations" class="py-5 mt-md-4">
-    <div class="container py-4">
-      
-      <div class="row mb-5">
-        <div class="col-12 text-center text-lg-start">
-          <h2 class="display-5 fw-bold" style="color: #117196;">Our Specializations</h2>
-          <p class="text-muted lead">Tailored expertise to navigate your business challenges.</p>
+                <p class="text-base sm:text-lg leading-relaxed text-white font-medium max-w-md">
+                    Where Italian cosmetic mastery meets North African ambition — VTF Cosmetics sets the standard for professional bleaching powder manufacturing on the continent.
+                </p>
+            </div>
         </div>
-      </div>
-
-      <div class="row align-items-center g-5">
-        
-        <div class="col-lg-6">
-          <div class="d-flex flex-column gap-4">
-            
-            <div class="specialization-block bg-white p-4 rounded shadow-sm">
-              <h4 class="fw-bold mb-2">Strategic Planning</h4>
-              <p class="text-muted mb-0">We help you define clear, actionable roadmaps to achieve long-term market dominance and operational efficiency.</p>
-            </div>
-
-            <div class="specialization-block bg-white p-4 rounded shadow-sm">
-              <h4 class="fw-bold mb-2">Financial Advisory</h4>
-              <p class="text-muted mb-0">Optimize your capital structure, manage risks, and maximize shareholder value with our expert financial insights.</p>
-            </div>
-
-            <div class="specialization-block bg-white p-4 rounded shadow-sm">
-              <h4 class="fw-bold mb-2">Digital Transformation</h4>
-              <p class="text-muted mb-0">Modernize your legacy systems and integrate cutting-edge tech to streamline workflows and boost productivity.</p>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-lg-6">
-          <div class="position-relative z-1">
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop" alt="Business Specializations" class="img-fluid rounded-4 shadow-lg w-100" style="object-fit: cover; min-height: 450px;">
-            
-            <div class="decorative-shape d-none d-lg-block"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-  <section class="py-5 bg-light mt-md-4">
-    <div class="container py-4">
-      
-      <div class="row mb-4">
-        <div class="col-12 text-center">
-          <h2 class="display-5 fw-bold" style="color: #117196;">Our Partners & Projects</h2>
-          <p class="text-muted lead">The impact we've made alongside our partners.</p>
-        </div>
-      </div>
-
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          
-          <div id="testimonialCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-
-            <div class="carousel-inner pb-5">
-              
-              <div class="carousel-item active" data-bs-interval="7000">
-                <div class="postcard-wrapper text-center">
-                  <span class="quote-icon">❝</span>
-                  <h4 class="fw-bold mb-4" style="color: #117196;">European Market Expansion</h4>
-                  <p class="fs-5 fst-italic text-muted mb-4 px-md-4">
-                    "GP Advisory provided us with an incredibly precise roadmap for our European launch. Their data-driven approach allowed us to optimize our operational costs by 20% while hitting all our strategic milestones six months ahead of schedule."
-                  </p>
-                  <hr class="w-25 mx-auto mb-4" style="border-color: #117196;">
-                  <h6 class="fw-bold mb-1">Alessandro Rossi</h6>
-                  <p class="small text-muted mb-0">CEO, TechLogistics Solutions</p>
-                </div>
-              </div>
-
-              <div class="carousel-item" data-bs-interval="7000">
-                <div class="postcard-wrapper text-center">
-                  <span class="quote-icon">❝</span>
-                  <h4 class="fw-bold mb-4" style="color: #117196;">Digital Workflow Integration</h4>
-                  <p class="fs-5 fst-italic text-muted mb-4 px-md-4">
-                    "The digital transformation strategies implemented by the GP team completely revitalized our legacy systems. We experienced a seamless transition and a tremendous boost in cross-departmental productivity."
-                  </p>
-                  <hr class="w-25 mx-auto mb-4" style="border-color: #117196;">
-                  <h6 class="fw-bold mb-1">Sarah Jenkins</h6>
-                  <p class="small text-muted mb-0">CTO, FinServe Global</p>
-                </div>
-              </div>
-
-              <div class="carousel-item" data-bs-interval="7000">
-                <div class="postcard-wrapper text-center">
-                  <span class="quote-icon">❝</span>
-                  <h4 class="fw-bold mb-4" style="color: #117196;">Capital Restructuring</h4>
-                  <p class="fs-5 fst-italic text-muted mb-4 px-md-4">
-                    "Navigating a complex financial restructure is never easy, but GP Advisory brought clarity and immense expertise to the table. They protected our core assets and maximized our shareholder value beautifully."
-                  </p>
-                  <hr class="w-25 mx-auto mb-4" style="border-color: #117196;">
-                  <h6 class="fw-bold mb-1">Michael Chang</h6>
-                  <p class="small text-muted mb-0">Managing Partner, Apex Capital</p>
-                </div>
-              </div>
-
-            </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </section>
-</div>
-
-<div id="what-we-do" class="page-section d-none">
-  <section class="py-5 mt-md-4">
-    <section id="services" class="py-5 bg-white">
-      <div class="container py-4">
-        
-        <div class="row mb-5">
-          <div class="col-12 text-center">
-            <h2 class="display-5 fw-bold" style="color: #117196;">Our Core Services</h2>
-            <p class="text-muted lead mx-auto" style="max-width: 700px;">
-              Comprehensive advisory solutions designed to guide your business through every phase of growth and complexity.
-            </p>
-          </div>
-        </div>
-
-        <div class="row g-4">
-          
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="service-card p-4 shadow-sm">
-              <div class="service-icon-box">
-                <i class="bi bi-bullseye"></i>
-              </div>
-              <h4 class="fw-bold mb-3">Corporate Strategy</h4>
-              <p class="text-muted mb-0">We partner with executives to design robust business strategies that identify new revenue streams and secure competitive advantages.</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="service-card p-4 shadow-sm">
-              <div class="service-icon-box">
-                <i class="bi bi-briefcase"></i>
-              </div>
-              <h4 class="fw-bold mb-3">Mergers & Acquisitions</h4>
-              <p class="text-muted mb-0">End-to-end M&A support, from target identification and rigorous due diligence to seamless post-merger integration.</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="service-card p-4 shadow-sm">
-              <div class="service-icon-box">
-                <i class="bi bi-graph-up-arrow"></i>
-              </div>
-              <h4 class="fw-bold mb-3">Financial Advisory</h4>
-              <p class="text-muted mb-0">Expert guidance on capital structuring, risk management, and financial forecasting to maximize your shareholder value.</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="service-card p-4 shadow-sm">
-              <div class="service-icon-box">
-                <i class="bi bi-globe2"></i>
-              </div>
-              <h4 class="fw-bold mb-3">Market Expansion</h4>
-              <p class="text-muted mb-0">Data-backed roadmaps for entering new geographic markets or launching new product lines with minimized risk.</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="service-card p-4 shadow-sm">
-              <div class="service-icon-box">
-                <i class="bi bi-gear-wide-connected"></i>
-              </div>
-              <h4 class="fw-bold mb-3">Operational Excellence</h4>
-              <p class="text-muted mb-0">We analyze your supply chain and internal workflows to eliminate inefficiencies and reduce operational costs.</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="service-card p-4 shadow-sm">
-              <div class="service-icon-box">
-                <i class="bi bi-cpu"></i>
-              </div>
-              <h4 class="fw-bold mb-3">Digital Transformation</h4>
-              <p class="text-muted mb-0">Modernize legacy systems and integrate scalable technologies to future-proof your business operations.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
     </section>
-  </section>
-    <section class="py-5 bg-light">
-    <div class="container py-4">
-      
-      <div class="row mb-5">
-        <div class="col-12 text-center">
-          <h2 class="display-5 fw-bold" style="color: #117196;">How we work</h2>
-        </div>
-      </div>
 
-      <div class="row mb-4 g-3 step-row">
-        <div class="col-12 col-md-3">
-          <div class="step-box-left p-4 d-flex align-items-center justify-content-center h-100">
-            <h5 class="mb-0 fw-bold">Phase 1</h5>
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="step-box-right p-4 d-flex align-items-center h-100">
-            <p class="text-muted mb-0">Initial consultation and comprehensive business audit to identify key growth areas, market opportunities, and operational bottlenecks.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4 g-3 step-row">
-        <div class="col-12 col-md-3 offset-md-1">
-          <div class="step-box-left p-4 d-flex align-items-center justify-content-center h-100">
-            <h5 class="mb-0 fw-bold">Phase 2</h5>
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="step-box-right p-4 d-flex align-items-center h-100">
-            <p class="text-muted mb-0">Developing a tailored strategic roadmap aligned with your long-term corporate objectives and current market realities.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4 g-3 step-row">
-        <div class="col-12 col-md-3 offset-md-2">
-          <div class="step-box-left p-4 d-flex align-items-center justify-content-center h-100">
-            <h5 class="mb-0 fw-bold">Phase 3</h5>
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="step-box-right p-4 d-flex align-items-center h-100">
-            <p class="text-muted mb-0">Execution and implementation, working closely with your leadership team to integrate new processes and technologies seamlessly.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4 g-3 step-row">
-        <div class="col-12 col-md-3 offset-md-3">
-          <div class="step-box-left p-4 d-flex align-items-center justify-content-center h-100">
-            <h5 class="mb-0 fw-bold">Phase 4</h5>
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="step-box-right p-4 d-flex align-items-center h-100">
-            <p class="text-muted mb-0">Continuous monitoring, performance tracking, and agile adjustments to ensure sustainable success and maximum ROI.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-</div>
-
-<div id="where-to-find-us" class="page-section d-none">
-  
-  <section id="global-network" class="py-5 mt-md-4">
-    <div class="container py-4">
-      
-      <div class="row mb-5 text-center text-lg-start">
-        <div class="col-12">
-          <h2 class="display-5 fw-bold" style="color: #117196;">Our Offices</h2>
-          <p class="text-muted lead">Global presence, local expertise. Find us at our key international hubs.</p>
-        </div>
-      </div>
-
-      <div class="row align-items-center g-5">
-        
-        <div class="col-lg-5">
-          <div class="d-flex flex-column gap-4">
-            
-            <div class="office-block p-4 bg-white rounded shadow-sm">
-              <h4 class="fw-bold mb-3">Chiasso Headquarters</h4>
-              <p class="text-muted mb-2 d-flex align-items-start">
-                <i class="bi bi-geo-alt-fill office-icon mt-1"></i> 
-                <span>Corso San Gottardo 39<br>6830 Chiasso, Switzerland</span>
-              </p>
-              <p class="text-muted mb-0 d-flex align-items-center">
-                <i class="bi bi-telephone-fill office-icon"></i> 
-                <span>+41 91 123 45 67</span>
-              </p>
+    <!-- ============ PRODUCTION SITE ============ -->
+    <section id="our-production" class="py-16 sm:py-24 md:py-32 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <!-- Section label -->
+            <div class="flex items-center gap-3 mb-6 sm:mb-8">
+                <span class="w-10 h-[2px] bg-primary"></span>
+                <span class="font-label text-xs uppercase tracking-[0.2em] font-bold text-primary">Our Production Site</span>
             </div>
 
-            <div class="office-block p-4 bg-white rounded shadow-sm">
-              <h4 class="fw-bold mb-3">Monza Office</h4>
-              <p class="text-muted mb-2 d-flex align-items-start">
-                <i class="bi bi-geo-alt-fill office-icon mt-1"></i> 
-                <span>Via Manzoni 37<br>20900 Monza MB, Italy</span>
-              </p>
-              <p class="text-muted mb-0 d-flex align-items-center">
-                <i class="bi bi-telephone-fill office-icon"></i> 
-                <span>+39 02 1234 5678</span>
-              </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
+                <!-- Text side -->
+                <div class="flex flex-col gap-6 sm:gap-8 order-2 lg:order-1">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface leading-tight">
+                        A State-of-the-Art<br/>
+                        <span class="text-primary">Production Hub.</span>
+                    </h2>
+                    <p class="text-base sm:text-lg text-on-surface-variant leading-relaxed">
+                        VTF Cosmetics is a state-of-the-art production hub dedicated to bringing the excellence of Italian bleaching powders to the heart of North Africa. Located in Ben Arous, Tunis, our facility is modern, strategically positioned, and built with sustainability in mind.
+                    </p>
+                    <p class="text-base sm:text-lg text-on-surface-variant leading-relaxed">
+                        It has been specifically designed for the large-scale manufacturing of professional hair bleaching powders, ensuring outstanding performance, product stability, and full compliance with international quality and safety standards.
+                    </p>
+
+                    <!-- Stat chips -->
+                    <div class="grid grid-cols-3 gap-4 sm:gap-6 pt-2">
+                        <div class="bg-surface-container-low rounded-2xl p-4 sm:p-5 flex flex-col gap-1 items-center text-center">
+                            <span class="material-symbols-outlined text-primary" style="font-size:2rem;">location_city</span>
+                            <span class="font-headline font-bold text-sm text-on-surface">Ben Arous</span>
+                            <span class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Tunis, TN</span>
+                        </div>
+                        <div class="bg-surface-container-low rounded-2xl p-4 sm:p-5 flex flex-col gap-1 items-center text-center">
+                            <span class="material-symbols-outlined text-primary" style="font-size:2rem;">eco</span>
+                            <span class="font-headline font-bold text-sm text-on-surface">Sustainable</span>
+                            <span class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">By Design</span>
+                        </div>
+                        <div class="bg-surface-container-low rounded-2xl p-4 sm:p-5 flex flex-col gap-1 items-center text-center">
+                            <span class="material-symbols-outlined text-primary" style="font-size:2rem;">factory</span>
+                            <span class="font-headline font-bold text-sm text-on-surface">Large-Scale</span>
+                            <span class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Manufacturing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image side -->
+                <div class="relative order-1 lg:order-2">
+                    <!-- Decorative background blob -->
+                    <div class="absolute -top-8 -right-8 w-64 h-64 rounded-full clinical-wash opacity-10 blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-tertiary opacity-10 blur-2xl pointer-events-none"></div>
+
+                    <!-- Placeholder image with styled frame -->
+                    <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60 aspect-[4/3] bg-surface-container-low flex items-center justify-center">
+                        <img
+                            alt="VTF Cosmetics Production Facility — Ben Arous, Tunis"
+                            class="w-full h-full object-cover"
+                            src="images/VTF-Tunisia.jpg"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        />
+                        <!-- Fallback placeholder shown if image missing -->
+                        <div class="hidden w-full h-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-slate-100 to-blue-50 p-8 text-center">
+                            <span class="material-symbols-outlined text-primary" style="font-size:4rem; opacity:0.4;">factory</span>
+                            <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant opacity-60">Production Site · Ben Arous, Tunis</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating badge -->
+                    <div class="absolute -bottom-5 left-6 sm:left-10 z-20 bg-white rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3 border border-slate-100">
+                        <div class="w-10 h-10 clinical-wash rounded-xl flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-white text-xl">verified</span>
+                        </div>
+                        <div>
+                            <p class="font-headline font-bold text-sm text-on-surface">ISO 22716 Certified</p>
+                            <p class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">GMP Compliant Facility</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROCESS & TECHNOLOGY ============ -->
+    <section id="our-precision" class="py-16 sm:py-24 md:py-32 bg-surface-container-low">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 sm:mb-16 gap-4">
+                <div class="max-w-2xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="w-8 h-px bg-primary"></span>
+                        <span class="font-label text-xs uppercase tracking-[0.22em] font-bold text-primary">Process &amp; Technology</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface leading-tight">
+                        The Art of<br/>
+                        <span class="text-primary">Chemical Precision.</span>
+                    </h2>
+                </div>
+            </div>
+            
+            <!-- Mobile: stacked cards. Desktop: original bento grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-4 sm:gap-6 md:h-[800px]">
+                <!-- Wide image card -->
+                <div class="md:col-span-8 md:row-span-1 overflow-hidden rounded-3xl group relative h-56 sm:h-72 md:h-auto shadow-sm">
+                    <img alt="Production precision" class="w-full h-full object-cover" src="images/Vitalfarco_RapiHairBleach_Lab.png" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
+                        <h4 class="text-white font-headline text-2xl font-bold">Precision Mixing</h4>
+                        <p class="text-white/80 text-sm">State-of-the-art automation for consistent particle distribution.</p>
+                    </div>
+                </div>
+                
+                <!-- Tall blue card — spans 2 rows on desktop -->
+                <div class="md:col-span-4 md:row-span-2 overflow-hidden rounded-3xl relative group h-80 md:h-auto shadow-sm">
+                    <img alt="Finished Product Science" class="w-full h-full object-cover opacity-80" src="images/Vitalfarco_beker-RapidHairBleach.png" />
+                    <div class="absolute inset-0 flex flex-col justify-center p-8 sm:p-10 bg-primary/60 backdrop-blur-sm">
+                        <span class="font-label text-[10px] uppercase tracking-widest text-on-primary/60 mb-4">Laboratory Spec</span>
+                        <h4 class="text-on-primary font-headline text-2xl sm:text-3xl font-extrabold mb-6">Ultra-White Dust-Free Formula</h4>
+                        <ul class="text-on-primary/90 space-y-4">
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-sm">check_circle</span><span class="text-sm font-medium">Non-volatile composition</span></li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-sm">check_circle</span><span class="text-sm font-medium">9+ levels of lift</span></li>
+                            <li class="flex items-center gap-3"><span class="material-symbols-outlined text-sm">check_circle</span><span class="text-sm font-medium">Hair fiber protection technology</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Molecular Innovation -->
+                <div class="md:col-span-4 md:row-span-1 bg-surface-container-lowest rounded-3xl p-6 sm:p-8 flex flex-col gap-5 shadow-sm border border-slate-100">
+                    <div class="w-16 h-16 bg-primary-fixed rounded-2xl flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-primary" style="font-size:2.2rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 48;">science</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline font-bold text-xl mb-2">Molecular Innovation</h4>
+                        <p class="text-on-surface-variant text-sm leading-relaxed">Our R&D center in Tunisia works in direct synergy with Italian chemists to push the boundaries of cosmetic safety and formulation science.</p>
+                    </div>
+                </div>
+
+                <!-- Quality badge -->
+                <div class="md:col-span-4 md:row-span-1 bg-gradient-to-br from-primary to-primary-container rounded-3xl p-6 sm:p-8 flex flex-col gap-5 shadow-md">
+                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-white" style="font-size:2.2rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 48;">verified</span>
+                    </div>
+                    <div>
+                        <h4 class="font-headline font-bold text-xl text-white mb-2">Guaranteed Quality</h4>
+                        <p class="text-white/80 text-sm leading-relaxed mb-4">Every batch is rigorously tested to meet ISO 22716 GMP standards, ensuring consistent performance and absolute safety across all our formulations.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white/15 text-white text-[10px] font-label font-bold uppercase tracking-wider px-3 py-1 rounded-full">ISO 9001</span>
+                            <span class="bg-white/15 text-white text-[10px] font-label font-bold uppercase tracking-wider px-3 py-1 rounded-full">GMP</span>
+                            <span class="bg-white/15 text-white text-[10px] font-label font-bold uppercase tracking-wider px-3 py-1 rounded-full">REACH</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ EXCELLENCE SECTION ============ -->
+    <section id="our-mission" class="py-16 sm:py-24 md:py-32 bg-surface overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-16 md:gap-20 items-center">
+
+                <!-- Image — order-2 on mobile (shows after text), order-1 on desktop (shows left) -->
+                <div class="relative order-2 md:order-1">
+                    <img alt="Laboratory precision" class="w-full aspect-[4/5] object-cover rounded-3xl shadow-xl" src="images/Vitalfarco_RapidHairBleach-violet.png" />
+                </div>
+
+                <!-- Text + trust cards — order-1 on mobile (shows first), order-2 on desktop (shows right) -->
+                <div class="flex flex-col gap-8 order-1 md:order-2">
+                    <!-- Eyebrow -->
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-px" style="background:#7c4dbe;"></span>
+                        <span class="font-label text-xs uppercase tracking-[0.22em] font-bold" style="color:#7c4dbe;">Our Commitment</span>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface leading-tight">
+                        Quality and Reliability<br/>
+                        <span style="color:#7c4dbe;">You Can Trust.</span>
+                    </h2>
+
+                    <p class="text-base sm:text-lg text-on-surface-variant leading-relaxed">
+                        Our production complies with international quality and safety standards, and our production system supports the development of safe, high-performing, and reliable bleaching powders — providing our clients with products they can trust.
+                    </p>
+
+                    <!-- Three trust pillars -->
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-start gap-4 bg-surface-container-low rounded-2xl p-5 group hover:shadow-md transition-shadow">
+                            <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md" style="background: linear-gradient(135deg, #7c4dbe 0%, #9c6fdb 100%);">
+                                <span class="material-symbols-outlined text-white" style="font-size:1.4rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">sanitizer</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-base mb-1" style="color: #7c4dbe;">The Highest Levels of Hygiene</h4>
+                                <p class="text-on-surface-variant text-sm leading-relaxed">Every step of production takes place in a controlled, clean environment designed to eliminate contamination.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 bg-surface-container-low rounded-2xl p-5 group hover:shadow-md transition-shadow">
+                            <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md" style="background: linear-gradient(135deg, #7c4dbe 0%, #9c6fdb 100%);">
+                                <span class="material-symbols-outlined text-white" style="font-size:1.4rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">equalizer</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-base mb-1" style="color: #7c4dbe;">Consistency Across All Batches</h4>
+                                <p class="text-on-surface-variant text-sm leading-relaxed">Automated processes and rigorous QC protocols guarantee the same outstanding performance, batch after batch.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 bg-surface-container-low rounded-2xl p-5 group hover:shadow-md transition-shadow">
+                            <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md" style="background: linear-gradient(135deg, #7c4dbe 0%, #9c6fdb 100%);">
+                                <span class="material-symbols-outlined text-white" style="font-size:1.4rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">manage_search</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-base mb-1" style="color: #7c4dbe;">Complete Traceability</h4>
+                                <p class="text-on-surface-variant text-sm leading-relaxed">Full end-to-end documentation ensures every product can be traced from raw material to finished formulation.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom stat strip -->
+                    <div class="flex items-center gap-6 pt-2 border-t border-outline-variant/40">
+                        <div class="text-center">
+                            <span class="text-2xl sm:text-3xl font-headline font-extrabold" style="color:#7c4dbe;">100%</span>
+                            <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Italian Know-How</p>
+                        </div>
+                        <div class="w-px h-10 bg-outline-variant/40"></div>
+                        <div class="text-center">
+                            <span class="text-2xl sm:text-3xl font-headline font-extrabold" style="color:#7c4dbe;">ISO 22716</span>
+                            <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">GMP Certified</p>
+                        </div>
+                        <div class="w-px h-10 bg-outline-variant/40"></div>
+                        <div class="text-center">
+                            <span class="text-2xl sm:text-3xl font-headline font-extrabold" style="color:#7c4dbe;">REACH</span>
+                            <p class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Registered</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- ============ CERTIFICATIONS / PRODUCT GAMMA ============ -->
+    <section id="reliability-certifications" class="py-16 sm:py-24 md:py-32 bg-surface-container-low overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8">
+
+            <!-- Header -->
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-8 h-px bg-primary"></span>
+                <span class="font-label text-xs uppercase tracking-[0.22em] font-bold text-primary">Reliability &amp; Certifications</span>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-on-surface leading-tight max-w-2xl">
+                    A Product Range Built<br/>
+                    <span class="text-primary">for Professionals.</span>
+                </h2>
+                <p class="text-base text-on-surface-variant leading-relaxed max-w-md">
+                    From fast-lifting bleaching powders to gentle conditioning formulas, every VTF Cosmetics product is designed to deliver outstanding salon-grade results with full compliance to international safety standards.
+                </p>
             </div>
 
-            <div class="office-block p-4 bg-white rounded shadow-sm">
-              <h4 class="fw-bold mb-3">Dubai Office</h4>
-              <p class="text-muted mb-2 d-flex align-items-start">
-                <i class="bi bi-geo-alt-fill office-icon mt-1"></i> 
-                <span>1 Canada Square, Canary Wharf<br>Dubai E14 5AB, UAE</span>
-              </p>
-              <p class="text-muted mb-0 d-flex align-items-center">
-                <i class="bi bi-telephone-fill office-icon"></i> 
-                <span>+971 20 7123 4567</span>
-              </p>
+            <!-- Main grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
+
+                <!-- Left: Image placeholder -->
+                <div class="relative rounded-3xl overflow-hidden shadow-xl bg-surface-container aspect-[4/3] lg:aspect-auto lg:min-h-96 flex items-center justify-center group">
+                    <img
+                        src="images/Vitalfarco_beker-RapidHairBleach.png"
+                        alt="VTF Cosmetics Product Range"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    />
+                    <!-- Fallback -->
+                    <div class="hidden w-full h-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-blue-50 to-slate-100 p-10 text-center">
+                        <span class="material-symbols-outlined text-primary/30" style="font-size:5rem;">inventory_2</span>
+                        <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant/50">Product Image Placeholder</p>
+                    </div>
+                    <!-- Gradient overlay bottom -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-6 left-6 right-6 pointer-events-none">
+                        <span class="inline-block bg-white/15 backdrop-blur-md text-white text-xs font-label font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-white/20">
+                            Rapid Hair Bleach · Professional Line
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Right: Feature cards 2×2 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+
+                    <div class="bg-surface-container-lowest rounded-3xl p-6 flex flex-col gap-4 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 clinical-wash rounded-2xl flex items-center justify-center shadow-md shadow-primary/20">
+                            <span class="material-symbols-outlined text-white" style="font-size:1.5rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">bolt</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-on-surface text-base mb-1">High-Speed Lifting</h4>
+                            <p class="text-on-surface-variant text-sm leading-relaxed">Achieve up to 9+ levels of lift with our fast-acting, dust-free bleaching powder formula.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-surface-container-lowest rounded-3xl p-6 flex flex-col gap-4 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 clinical-wash rounded-2xl flex items-center justify-center shadow-md shadow-primary/20">
+                            <span class="material-symbols-outlined text-white" style="font-size:1.5rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">spa</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-on-surface text-base mb-1">Hair Fibre Protection</h4>
+                            <p class="text-on-surface-variant text-sm leading-relaxed">Enriched with conditioning agents that preserve hair structure throughout the bleaching process.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-surface-container-lowest rounded-3xl p-6 flex flex-col gap-4 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 clinical-wash rounded-2xl flex items-center justify-center shadow-md shadow-primary/20">
+                            <span class="material-symbols-outlined text-white" style="font-size:1.5rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">verified</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-on-surface text-base mb-1">Certified &amp; Safe</h4>
+                            <p class="text-on-surface-variant text-sm leading-relaxed">Every formula is ISO 22716 GMP certified and REACH registered for full international compliance.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-primary to-primary-container rounded-3xl p-6 flex flex-col gap-4 shadow-md hover:shadow-lg transition-shadow">
+                        <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+                            <span class="material-symbols-outlined text-white" style="font-size:1.5rem; font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24;">handshake</span>
+                        </div>
+                        <div>
+                            <h4 class="font-headline font-bold text-white text-base mb-1">Private Label Ready</h4>
+                            <p class="text-white/80 text-sm leading-relaxed">We offer flexible private label and white-label solutions tailored to your brand and market needs.</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
-          </div>
-        </div>
+            <!-- Certification strip -->
+            <div class="mt-10 sm:mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="flex items-center gap-3 bg-surface-container-lowest rounded-2xl px-5 py-4 shadow-sm border border-slate-100">
+                    <span class="material-symbols-outlined text-primary" style="font-size:1.6rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">verified</span>
+                    <div>
+                        <p class="font-headline font-bold text-sm text-on-surface">ISO 9001</p>
+                        <p class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Quality Mgmt</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-surface-container-lowest rounded-2xl px-5 py-4 shadow-sm border border-slate-100">
+                    <span class="material-symbols-outlined text-primary" style="font-size:1.6rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">health_and_safety</span>
+                    <div>
+                        <p class="font-headline font-bold text-sm text-on-surface">GMP</p>
+                        <p class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">ISO 22716</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-surface-container-lowest rounded-2xl px-5 py-4 shadow-sm border border-slate-100">
+                    <span class="material-symbols-outlined text-primary" style="font-size:1.6rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">biotech</span>
+                    <div>
+                        <p class="font-headline font-bold text-sm text-on-surface">IFRA</p>
+                        <p class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Compliant</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-surface-container-lowest rounded-2xl px-5 py-4 shadow-sm border border-slate-100">
+                    <span class="material-symbols-outlined text-primary" style="font-size:1.6rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">public</span>
+                    <div>
+                        <p class="font-headline font-bold text-sm text-on-surface">REACH</p>
+                        <p class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Registered</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="col-lg-7">
-          <div class="position-relative z-1">
-            <img src="images\MapChart_Offices.svg" alt="Our Global Offices" class="img-fluid rounded-4 shadow-lg w-100" style="object-fit: contain;">
+        </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="py-16 sm:py-24 md:py-32 bg-white relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/3 h-full clinical-wash opacity-5 skew-x-12 translate-x-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 md:gap-24">
+                <div>
+                    <span class="font-label text-xs uppercase tracking-[0.2em] text-primary font-bold mb-4 block">Connect with us</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-headline font-extrabold tracking-tight mb-6 sm:mb-8">
+                        Start your technical <br/>
+                        <span class="text-primary">partnership today.</span>
+                    </h2>
+                    <p class="text-on-surface-variant text-base sm:text-lg leading-relaxed mb-8 sm:mb-12">
+                        Whether you are looking for private label solutions, wholesale supply, or technical laboratory consulting, our team in Tunisia is ready to assist.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary-fixed rounded-full flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline font-bold text-on-surface">Ben Arous, Tunis</h5>
+                                <a href="https://maps.google.com/?q=Ben+Arous,+Tunis,+Tunisia" target="_blank" rel="noopener noreferrer" class="text-primary text-sm hover:underline flex items-center gap-1 mt-0.5">
+                                    <span>Open in Maps</span>
+                                    <span class="material-symbols-outlined" style="font-size:0.9rem;">open_in_new</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary-fixed rounded-full flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                            </div>
+                            <div>
+                                <h5 class="font-headline font-bold text-on-surface">Email</h5>
+                                <a href="mailto:info@vtfcosmetics.com" class="text-on-surface-variant text-sm hover:text-primary transition-colors">info@vtfcosmetics.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-surface-container-lowest p-6 sm:p-10 shadow-2xl shadow-slate-200/50 rounded-3xl">
+                    <form id="contact-form" action="https://formspree.io/f/myknrgqe" method="POST" class="space-y-6 sm:space-y-7" novalidate>
+
+                        <!-- Success banner -->
+                        <div id="form-success" class="hidden bg-green-50 border border-green-200 text-green-800 rounded-2xl px-5 py-4 text-sm font-label font-semibold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-600" style="font-size:1.2rem; font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">check_circle</span>
+                            Message sent! We'll get back to you shortly.
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                            <div class="space-y-1.5">
+                                <label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="name">Full Name <span class="text-red-500">*</span></label>
+                                <input id="name" name="name" type="text" placeholder="John Doe"
+                                    class="form-field w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary px-0 py-2 transition-all outline-none" />
+                                <p class="field-error text-red-500 text-xs font-label hidden">Please enter your full name.</p>
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="company">Company <span class="text-red-500">*</span></label>
+                                <input id="company" name="company" type="text" placeholder="Cosmetics Ltd"
+                                    class="form-field w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary px-0 py-2 transition-all outline-none" />
+                                <p class="field-error text-red-500 text-xs font-label hidden">Please enter your company name.</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="email">Email Address <span class="text-red-500">*</span></label>
+                            <input id="email" name="email" type="email" placeholder="john@company.com"
+                                class="form-field w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary px-0 py-2 transition-all outline-none" />
+                            <p class="field-error text-red-500 text-xs font-label hidden">Please enter a valid email address.</p>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="inquiry">Inquiry Type <span class="text-red-500">*</span></label>
+                            <select id="inquiry" name="inquiry"
+                                class="form-field w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary px-0 py-2 transition-all appearance-none outline-none cursor-pointer">
+                                <option value="">— Select an option —</option>
+                                <option>Private Label Partnership</option>
+                                <option>Bulk Wholesale Supply</option>
+                                <option>Laboratory Services</option>
+                                <option>General Information</option>
+                            </select>
+                            <p class="field-error text-red-500 text-xs font-label hidden">Please select an inquiry type.</p>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant" for="description">Description <span class="text-red-500">*</span></label>
+                            <textarea id="description" name="description" rows="4" placeholder="How can we assist your business?"
+                                class="form-field w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary px-0 py-2 transition-all resize-none outline-none"></textarea>
+                            <p class="field-error text-red-500 text-xs font-label hidden">Please add a short description.</p>
+                        </div>
+
+                        <button id="submit-btn" type="submit"
+                            class="w-full clinical-wash text-on-primary py-4 sm:py-5 rounded-2xl font-label text-sm font-bold uppercase tracking-[0.2em] hover:shadow-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                            <span id="btn-label">Send message</span>
+                            <span id="btn-spinner" class="hidden material-symbols-outlined animate-spin" style="font-size:1.1rem;">progress_activity</span>
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-slate-50 border-t border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10 sm:gap-12 mb-10 sm:mb-16">
+                <div>
+                    <img alt="Vitalfarco Logo" class="h-12 sm:h-16 w-auto mb-4" src="images/Logo_VTF_Tunisia.png" />
+                    <p class="max-w-xs text-slate-500 text-sm leading-relaxed">Bridging the gap between laboratory science and cosmetic luxury since 2024.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-10 sm:gap-16">
+                    <div class="flex flex-col gap-4">
+                        <span class="font-label text-[10px] uppercase font-bold tracking-widest text-primary">Company</span>
+                        <a class="text-slate-500 hover:text-blue-500 transition-colors text-sm" href="#">Privacy Policy</a>
+                        <a class="text-slate-500 hover:text-blue-500 transition-colors text-sm" href="#">Terms of Service</a>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <span class="font-label text-[10px] uppercase font-bold tracking-widest text-primary">Certifications</span>
+                        <a class="text-slate-500 hover:text-blue-500 transition-colors text-sm" href="#">Laboratory Certifications</a>
+                        <a class="text-slate-500 hover:text-blue-500 transition-colors text-sm" href="#">Global Distribution</a>
+                    </div>
+                </div>
+            </div>
             
-            <div class="decorative-shape d-none d-lg-block" style="background-color: #e00073; bottom: -20px; right: -20px; left: auto; clip-path: polygon(100% 0, 100% 100%, 0 100%);"></div>
-          </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-slate-200/50 gap-4 sm:gap-6">
+                <span class="font-label text-xs uppercase tracking-widest text-slate-500">© 2024 Precision in Cosmetic Science.</span>
+                <div class="flex gap-6">
+                    <span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">language</span>
+                    <span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">verified_user</span>
+                    <span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">science</span>
+                </div>
+            </div>
         </div>
+    </footer>
 
-      </div>
-    </div>
-  </section>
+    <!-- ============ FORM VALIDATION + FORMSPREE JS ============ -->
+    <script>
+        const form = document.getElementById('contact-form');
+        const successBanner = document.getElementById('form-success');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnLabel = document.getElementById('btn-label');
+        const btnSpinner = document.getElementById('btn-spinner');
 
-  <div id="contact-section" class="row mt-5 pt-5 border-top">
-    <div class="col-lg-8 mx-auto text-center mb-5">
-      <h3 class="display-6 fw-bold" style="color: #117196;">Get in Touch</h3>
-      <p class="text-muted lead">Have a specific challenge in mind? Send us a message and our advisory team will reach out to you shortly.</p>
-    </div>
-  </div>
-      <div class="row justify-content-center pb-5">
-        <div class="col-lg-8">
-          
-          <div class="bg-white p-4 p-md-5 rounded shadow-sm" style="border-top: 5px solid #e00073;">
-            
-            <form action="https://formspree.io/f/xwvrpaze" method="POST" novalidate>
-              <div class="row g-4">
-                
-                <div class="col-md-6">
-                  <label for="fullName" class="form-label fw-bold" style="color: #117196;">Full Name *</label>
-                  <input type="text" class="form-control bg-light border-0 py-2" id="fullName" name="name" placeholder="John Doe" required>
-                </div>
-                
-                <div class="col-md-6">
-                  <label for="emailAddress" class="form-label fw-bold" style="color: #117196;">Email Address *</label>
-                  <input type="email" class="form-control bg-light border-0 py-2" id="emailAddress" name="email" placeholder="john@company.com" required>
-                </div>
-
-                <div class="col-md-6">
-                  <label for="companyName" class="form-label fw-bold" style="color: #117196;">Company Name</label>
-                  <input type="text" class="form-control bg-light border-0 py-2" id="companyName" name="company" placeholder="Your Organization">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="phoneNumber" class="form-label fw-bold" style="color: #117196;">Phone Number</label>
-                  <input type="tel" class="form-control bg-light border-0 py-2" id="phoneNumber" name="phone" placeholder="+41 91 000 00 00">
-                </div>
-                
-                <div class="col-12">
-                  <label for="serviceInterest" class="form-label fw-bold" style="color: #117196;">How can we help you?</label>
-                  <select class="form-select bg-light border-0 py-2" id="serviceInterest" name="subject">
-                    <option value="General Inquiry" selected>General Inquiry</option>
-                    <option value="Corporate Strategy">Corporate Strategy</option>
-                    <option value="Mergers & Acquisitions">Mergers & Acquisitions</option>
-                    <option value="Financial Advisory">Financial Advisory</option>
-                    <option value="Digital Transformation">Digital Transformation</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                
-                <div class="col-12">
-                  <label for="message" class="form-label fw-bold" style="color: #117196;">Your Message *</label>
-                  <textarea class="form-control bg-light border-0 py-2" id="message" name="message" rows="5" placeholder="Tell us about your project or challenge..." required></textarea>
-                </div>
-                
-                <div class="col-12 mt-2">
-                  <div id="form-messages" class="text-center fw-bold d-none p-2 rounded"></div>
-                </div>
-
-                <div class="col-12 text-center mt-3">
-                  <button type="submit" class="btn contact-btn px-5 py-3 w-100 fw-bold text-uppercase" style="letter-spacing: 1px;">Send Message</button>
-                </div>
-                
-              </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-</div>
-
-
-
-
-<footer class="bg-light pt-5 pb-4 border-top mt-5">
-  <div class="container">
-    <div class="row">
-      
-      <div class="col-12 col-lg-5 mb-4 mb-lg-0">
-        <a class="navbar-brand" href="#who-we-are">
-          <img src="images\gp-advisory-logo.svg" alt="GP Advisory" class="mb-3" style="max-height: 55px; width: auto; object-fit: contain;">
-        </a>
-        <p class="text-muted small mb-0">
-          &copy; 2026 GP Advisory & Investments SAGL
-        </p>
-      </div>
-
-      <div class="col-12 col-md-4 col-lg-2 offset-lg-1 mb-4 mb-lg-0">
-        <ul class="list-unstyled small"> 
-          <li class="mb-3"><a href="#mission" class="text-decoration-none text-dark hover-primary footer-link">Our mission</a></li>
-          <li class="mb-3"><a href="#specializations" class="text-decoration-none text-dark hover-primary footer-link">Our specialization</a></li>
-          <li class="mb-3"><a href="#clients-projects" class="text-decoration-none text-dark hover-primary footer-link">Our clients</a></li>
-        </ul>
-      </div>
-
-      <div class="col-12 col-md-4 col-lg-2 mb-4 mb-lg-0">
-        <ul class="list-unstyled small">
-          <li class="mb-3"><a href="#services" class="text-decoration-none text-dark hover-primary footer-link">Our Services</a></li>
-          <li class="mb-3"><a href="#how-we-work" class="text-decoration-none text-dark hover-primary footer-link">How we work</a></li>
-        </ul>
-      </div>
-
-      <div class="col-12 col-md-4 col-lg-2 mb-4 mb-lg-0">
-        <ul class="list-unstyled small">
-          <li class="mb-3"><a href="#global-network" class="text-decoration-none text-dark hover-primary footer-link">Our Global Network</a></li>
-          <li class="mb-3"><a href="#contact-section" class="text-decoration-none text-dark hover-primary footer-link">Contact Us</a></li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Select all the links inside the menu, including the contact button
-    const navLinks = document.querySelectorAll('.nav-link, .contact-btn');
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navbarCollapse = document.getElementById('navbarContent');
-
-    // Loop through each link
-    navLinks.forEach(function (link) {
-      link.addEventListener('click', function () {
-        // If the mobile menu is currently open, click the hamburger button to close it
-        if (navbarCollapse.classList.contains('show')) {
-          navbarToggler.click();
+        function validateEmail(val) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
         }
-      });
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const navLinks = document.querySelectorAll('.nav-link, .navbar-brand, .contact-btn, .footer-link');
-    const sections = document.querySelectorAll('.page-section');
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navbarCollapse = document.getElementById('navbarContent');
 
-    navLinks.forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href');
-
-        if (targetId && targetId.startsWith('#')) {
-          e.preventDefault();
-
-          const targetElement = document.querySelector(targetId);
-
-          if (targetElement) {
-            
-            // --- NEW CODE: Handle the active class for magenta highlighting ---
-            if (this.classList.contains('nav-link')) {
-              // Remove active class from all links
-              document.querySelectorAll('.navbar-nav .nav-link').forEach(nav => nav.classList.remove('active'));
-              // Add active class to the currently clicked link
-              this.classList.add('active');
-            }
-            // ----------------------------------------------------------------
-
-            // Find which main page this element lives inside (or if it IS the main page)
-            const parentPage = targetElement.closest('.page-section');
-
-            if (parentPage) {
-              // Hide all pages, then unhide the correct one
-              sections.forEach(function (sec) {
-                sec.classList.add('d-none');
-              });
-              parentPage.classList.remove('d-none');
-            }
-
-            // Close the mobile menu if it is currently open
-            if (navbarCollapse.classList.contains('show')) {
-              navbarToggler.click();
-            }
-
-            // Smart Scrolling: 
-            if (targetElement.classList.contains('page-section')) {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+        function setFieldError(field, show) {
+            const wrapper = field.closest('.space-y-1\\.5') || field.parentElement;
+            const errEl = wrapper ? wrapper.querySelector('.field-error') : null;
+            if (show) {
+                field.classList.add('border-red-500');
+                field.classList.remove('border-outline-variant');
+                if (errEl) errEl.classList.remove('hidden');
             } else {
-              setTimeout(() => {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }, 50);
+                field.classList.remove('border-red-500');
+                field.classList.add('border-outline-variant');
+                if (errEl) errEl.classList.add('hidden');
             }
-          }
-        }
-      });
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector('form[action="https://formspree.io/f/xwvrpaze"]');
-    const messageContainer = document.getElementById('form-messages');
-
-    if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault(); // Stops the page from refreshing
-
-        // Select the required fields
-        const requiredFields = [
-          document.getElementById('fullName'),
-          document.getElementById('emailAddress'),
-          document.getElementById('message')
-        ];
-
-        let isValid = true;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple check for valid email format
-
-        // Reset previous messages
-        messageContainer.classList.add('d-none');
-        messageContainer.classList.remove('text-danger', 'text-success', 'bg-light', 'bg-danger-subtle');
-        messageContainer.textContent = '';
-
-        // Check each required field
-        requiredFields.forEach(field => {
-          let fieldIsValid = true;
-
-          // Check if the field is empty
-          if (field.value.trim() === '') {
-            fieldIsValid = false;
-          } 
-          // If it's the email field, check if it's actually an email address
-          else if (field.id === 'emailAddress' && !emailRegex.test(field.value.trim())) {
-            fieldIsValid = false;
-          }
-
-          // Apply or remove the red border
-          if (!fieldIsValid) {
-            isValid = false;
-            field.classList.add('input-error');
-            field.classList.remove('border-0');
-          } else {
-            field.classList.remove('input-error');
-            field.classList.add('border-0');
-          }
-        });
-
-        // If validation fails, show your custom error in the message bar and stop
-        if (!isValid) {
-          messageContainer.textContent = 'Please compile the requested fields with correct values.';
-          messageContainer.classList.remove('d-none');
-          messageContainer.classList.add('text-danger', 'bg-danger-subtle'); // Red text on a very light red background
-          return;
         }
 
-        // If valid, show loading state on button
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-
-        // Send data to Formspree in the background
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-          method: form.method,
-          body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
-        }).then(response => {
-          if (response.ok) {
-            // SUCCESS: Empty the form and show success message
-            form.reset(); 
-            messageContainer.textContent = 'Message sent successfully! We will be in touch soon.';
-            messageContainer.classList.remove('d-none');
-            messageContainer.classList.add('text-success', 'bg-light');
-          } else {
-            // ERROR from server
-            messageContainer.textContent = 'Oops! There was a problem submitting your form.';
-            messageContainer.classList.remove('d-none');
-            messageContainer.classList.add('text-danger', 'bg-light');
-          }
-        }).catch(error => {
-          // NETWORK ERROR
-          messageContainer.textContent = 'Oops! Please check your internet connection and try again.';
-          messageContainer.classList.remove('d-none');
-          messageContainer.classList.add('text-danger', 'bg-light');
-        }).finally(() => {
-          // Restore the button
-          submitBtn.textContent = originalBtnText;
-          submitBtn.disabled = false;
+        // Live clear errors on input
+        form.querySelectorAll('.form-field').forEach(field => {
+            field.addEventListener('input', () => setFieldError(field, false));
+            field.addEventListener('change', () => setFieldError(field, false));
         });
-      });
 
-      // Remove the red border as soon as the user starts typing to fix their mistake
-      const allRequiredInputs = form.querySelectorAll('[required]');
-      allRequiredInputs.forEach(input => {
-        input.addEventListener('input', function () {
-          this.classList.remove('input-error');
-          this.classList.add('border-0');
-          
-          // Optionally hide the error message bar once they start typing again
-          messageContainer.classList.add('d-none');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let hasError = false;
+
+            const name = document.getElementById('name');
+            const company = document.getElementById('company');
+            const email = document.getElementById('email');
+            const inquiry = document.getElementById('inquiry');
+            const description = document.getElementById('description');
+
+            if (!name.value.trim()) { setFieldError(name, true); hasError = true; } else { setFieldError(name, false); }
+            if (!company.value.trim()) { setFieldError(company, true); hasError = true; } else { setFieldError(company, false); }
+            if (!email.value.trim() || !validateEmail(email.value.trim())) { setFieldError(email, true); hasError = true; } else { setFieldError(email, false); }
+            if (!inquiry.value) { setFieldError(inquiry, true); hasError = true; } else { setFieldError(inquiry, false); }
+            if (!description.value.trim()) { setFieldError(description, true); hasError = true; } else { setFieldError(description, false); }
+
+            if (hasError) return;
+
+            // Submit to Formspree
+            btnLabel.textContent = 'Sending…';
+            btnSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+
+            try {
+                const data = new FormData(form);
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    form.reset();
+                    successBanner.classList.remove('hidden');
+                    successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    btnLabel.textContent = 'Error — try again';
+                }
+            } catch (err) {
+                btnLabel.textContent = 'Error — try again';
+            } finally {
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                if (btnLabel.textContent === 'Sending…') btnLabel.textContent = 'Send message';
+            }
         });
-      });
-    }
-  });
-</script>
+    </script>
+
+    <!-- ============ HAMBURGER JS ============ -->
+    <script>
+        const btn = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        const bar1 = document.getElementById('bar1');
+        const bar2 = document.getElementById('bar2');
+        const bar3 = document.getElementById('bar3');
+        let isOpen = false;
+
+        btn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            menu.style.maxHeight = isOpen ? menu.scrollHeight + 'px' : '0';
+            if (isOpen) {
+                bar1.style.transform = 'translateY(7px) rotate(45deg)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'translateY(-7px) rotate(-45deg)';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+            }
+        });
+
+        // Close mobile menu on nav link click
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                isOpen = false;
+                menu.style.maxHeight = '0';
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+            });
+        });
+    </script>
+
 </body>
 </html>
